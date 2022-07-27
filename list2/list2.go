@@ -125,15 +125,13 @@ func CenteredAverage(a []int) int {
 
 // Given an array of ints, return true if the array contains a 2 next to a 2 somewhere.
 func Has22(a []int) bool {
-	seen2 := false
-	for _, k := range a {
+	for i, k := range a {
 		if k == 2 {
-			if seen2 == true {
-				return true
+			if !(i+1 > len(a)-1) {
+				if a[i+1] == 2 {
+					return true
+				}
 			}
-			seen2 = true
-		} else {
-			seen2 = false
 		}
 	}
 
