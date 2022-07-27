@@ -1,5 +1,9 @@
 package list2
 
+import (
+	"sort"
+)
+
 // Return the number of even ints in the given array. Note: the % "mod" operator
 // computes the remainder, e.g. 5 % 2 is 1.
 func CountEvens(a []int) int {
@@ -71,10 +75,67 @@ func Sum67(a []int) int {
 // likewise for the largest value. Use int division to produce the final average.
 // You may assume that the array is length 3 or more.
 func CenteredAverage(a []int) int {
-	return 0
+
+	/* Elegant way (use sort)*/
+	sort.Ints(a)
+	trimmed := a[1 : len(a)-1]
+
+	sum := 0
+	for _, i := range trimmed {
+		sum += i
+	}
+	return sum / len(trimmed)
+
+	/* INITIAL WAY I USED (not so elegant)
+
+	lowest, largest := a[0], a[0]
+	lowestIndex, largestIndex := 0, 0
+	skips := 0
+	sum := 0
+
+	for i := 0; i < len(a); i++ {
+		if a[i] > largest {
+			largest = a[i]
+			largestIndex = i
+
+		}
+		if a[i] < lowest {
+			lowest = a[i]
+			lowestIndex = i
+		}
+	}
+
+	for i, k := range a {
+		if i != largestIndex && i != lowestIndex {
+			sum += k
+		} else {
+			skips++
+		}
+	}
+
+	if skips != 2 {
+		sum -= largest
+		return sum / (len(a) - 2)
+	}
+	return sum / (len(a) - 2)
+
+	*/
+
 }
 
 // Given an array of ints, return true if the array contains a 2 next to a 2 somewhere.
 func Has22(a []int) bool {
+	seen2 := false
+	for _, k := range a {
+		if k == 2 {
+			if seen2 == true {
+				return true
+			}
+			seen2 = true
+		} else {
+			seen2 = false
+		}
+	}
+
 	return false
 }
